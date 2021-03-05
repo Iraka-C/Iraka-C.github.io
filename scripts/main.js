@@ -13,6 +13,10 @@ function hoverHint($el,hint){
 }
 
 function arriving(){
+	loadBackground($("body"),"./resources/main-bg.jpg").catch(()=>{});
+	$(window).on("focus",e => {
+		$("#page-mask").fadeOut(500);
+	});
 	return new Promise(res=>{
 		$("#page-mask").fadeOut(500,res);
 	});
@@ -26,13 +30,15 @@ function jumpTo(url){
 
 function initPage(){
 	const $list=$("#content-list");
-	for(const item of mainPageItems){
+	if(!PAGE_ITEMS){
+		throw new Error("PAGE_ITEMS not found. unable to load");
+	}
+	for(let i=0;i<PAGE_ITEMS.length;i++){
+		const item=PAGE_ITEMS[i];
 		const $el=$("<div>");
-		$el.html("&bullet;&nbsp;"+item.name);
-
+		$el.html(item.name);
 		const $elHint=$("<div class='extra-hint'>").text(item.hint);
 		$el.append($elHint);
-
 		hoverHint($el,item.hint);
 		$list.append($el);
 
