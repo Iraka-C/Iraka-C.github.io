@@ -37,12 +37,18 @@ function initPage(){
 						return "";
 					}
 					if(url.match(/^\.*\/[^\/].*$/)){ // relative route
-						url=PAGE_ROUTE+url;
+						if(url.startsWith(".")){
+							url=PAGE_ROUTE+url;
+						}
+						else{
+							url=PAGE_ROUTE+"."+url;
+						}
 					}
 					appendTitleBlock(url,text);
 					return "";
 				}
 
+				// relative link dealt later
 				return `<a href="${href}">${text}</a>`;
 			},
 			table:(header,body)=>{ // add surroundings fow overflow
@@ -85,7 +91,12 @@ function initPage(){
 		function modifyRelativeURL($el,attribute){
 			const a=$el.attr(attribute);
 			if(a){
-				$el.attr(attribute,PAGE_ROUTE+a);
+				if(a.startsWith(".")){
+					$el.attr(attribute,PAGE_ROUTE+a);
+				}
+				else{
+					$el.attr(attribute,PAGE_ROUTE+"."+a);
+				}
 			}
 		}
 		$("#content-list").find("img, audio, iframe, source").each(function(){
