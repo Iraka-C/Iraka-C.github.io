@@ -30,8 +30,6 @@
 	top: var(--top-menu-height);
 	width: 100%;
 	height: calc(100% - var(--top-menu-height));
-	background-color: #000000aa;
-
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
