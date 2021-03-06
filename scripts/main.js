@@ -1,5 +1,3 @@
-$(initPage); // Main program entrance
-
 function hoverHint($el,hint){
 	$el.on("mouseenter pointerenter",e=>{
 		const hintBar=$("#content-hint-bar");
@@ -33,7 +31,7 @@ function jumpTo(url){
 
 function initPage(){
 	const $list=$("#content-list");
-	
+
 	loadConfig().then(content=>{
 		const items=JSON.parse(content);
 		for(let i=0;i<items.length;i++){
