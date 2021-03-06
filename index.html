@@ -13,20 +13,19 @@
 	<script src="./scripts/main.js"></script>
 	<script type="text/javascript">
 		const query=window.location.search;
-		if(query){
-			const qParams={};
-			for(const p of query.substring(1).split("&")){
-				const kv=p.split("=");
-				qParams[kv[0]]=kv[1];
-			}
-			const PAGE_CONFIG=decodeURIComponent(qParams.src);
-			const PAGE_BG=decodeURIComponent(qParams.bg);
-			$(initPage); // Main program entrance
-		}
-		else{ // default jump
+		if(!query){ // default jump
 			const configUrl=encodeURIComponent("./resources/main-config.json");
 			window.location.replace(`//iraka-c.github.io/index.html?src=${configUrl}`);
+			// will never reach following codes
 		}
+		const qParams={};
+		for(const p of query.substring(1).split("&")){
+			const kv=p.split("=");
+			qParams[kv[0]]=kv[1];
+		}
+		const PAGE_CONFIG=decodeURIComponent(qParams.src);
+		const PAGE_BG=decodeURIComponent(qParams.bg);
+		$(initPage); // Main program entrance
 	</script>
 </head>
 <body>
