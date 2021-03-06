@@ -1,0 +1,23 @@
+[{
+	"title": "Iraka"
+},{
+	"name": "Introduction",
+	"hint": "About me",
+	"url": "./markdown.html?title=Introduction&src=.%2Fmarkdowns%2Fintro.md"
+},{
+	"name": "Articles",
+	"hint": "Technological blogs",
+	"url": "./markdown.html"
+},{
+	"name": "Gadgets",
+	"hint": "Interesting little things",
+	"url": "//iraka-c.github.io"
+},{
+	"name": "Photography",
+	"hint": "What do you expect of a camera?",
+	"url": "//iraka-c.github.io"
+},{
+	"name": "Contact",
+	"hint": "How to hear from me",
+	"url": "./contact.html"
+}]

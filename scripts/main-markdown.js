@@ -109,6 +109,7 @@ function initPage(){
 			}
 		});
 	}).catch(err=>{
+		console.log(err);
 		$("#content-list").addClass("error-block");
 		$("#page-content").addClass("error-container");
 		if(err.status){

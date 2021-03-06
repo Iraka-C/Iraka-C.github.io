@@ -13,7 +13,10 @@ function hoverHint($el,hint){
 }
 
 function arriving(){
-	loadBackground($("body"),"./resources/main-bg.jpg").catch(()=>{});
+	loadBackground($("body"),PAGE_BG||"./resources/main-bg.jpg").catch(()=>{
+		// default image
+		loadBackground($("body"),"./resources/main-bg.jpg");
+	});
 	$(window).on("focus",e => {
 		$("#page-mask").fadeOut(500);
 	});
@@ -30,24 +33,36 @@ function jumpTo(url){
 
 function initPage(){
 	const $list=$("#content-list");
-	if(!PAGE_ITEMS){
-		throw new Error("PAGE_ITEMS not found. unable to load");
-	}
-	for(let i=0;i<PAGE_ITEMS.length;i++){
-		const item=PAGE_ITEMS[i];
-		const $el=$("<div>");
-		$el.html(item.name);
-		const $elHint=$("<div class='extra-hint'>").text(item.hint);
-		$el.append($elHint);
-		hoverHint($el,item.hint);
-		$list.append($el);
-
-		if(item.url){
-			$el.click(e=>{
-				jumpTo(item.url);
-			});
+	
+	loadConfig().then(content=>{
+		const items=JSON.parse(content);
+		for(let i=0;i<items.length;i++){
+			const item=items[i];
+			if(item.title){
+				$("#title-text").text(item.title);
+				continue;
+			}
+			const $el=$("<div>");
+			$el.html(item.name);
+			const $elHint=$("<div class='extra-hint'>").text(item.hint);
+			$el.append($elHint);
+			hoverHint($el,item.hint);
+			$list.append($el);
+	
+			if(item.url){
+				$el.click(e=>{
+					jumpTo(item.url);
+				});
+			}
 		}
-	}
+	}).catch(err=>{
+		if(err.status){
+			$("#content-list").text(err.status);
+		}
+		else{
+			$("#content-list").text("Error");
+		}
+	});
 	arriving();
 
 	$(window).on("resize",e=>{
@@ -66,4 +81,47 @@ function onResize(x,y){
 		$style.attr("href",newStyleHREF);
 		nowStyle=newStyleHREF;
 	}
+}
+
+// ================ Loading =================
+function loadConfig(){
+	if(!PAGE_CONFIG){
+		throw new Error("No PAGE_CONFIG found.");
+	}
+	const TIMEOUT_DOWNLOAD=10000; // there should be progress in 10s
+	return new Promise((res,rej)=>{
+		const req=new XMLHttpRequest();
+		let abortTimer=0;
+		function clearAbortTimer(){
+			if(abortTimer){
+				clearTimeout(abortTimer);
+				abortTimer=0;
+			}
+		}
+		function restartAbortTimer(){
+			clearAbortTimer();
+			abortTimer=setTimeout(()=>{ // cancel download
+				req.abort();
+			},TIMEOUT_DOWNLOAD);
+		}
+
+		req.open("GET",PAGE_CONFIG);
+		req.responseType="text"; // require text
+		req.onload=()=>{ // 100% is also captured by onprogress
+			if(req.status>=400){
+				rej(req);
+			}
+			else{
+				res(req.response);
+			}
+		};
+		req.onprogress=event=>{ // download process can be monitored
+			restartAbortTimer(); // restart download monitoring
+		}
+		req.ontimeout=()=>rej("Timeout");
+		req.onabort=()=>rej("Timeout");
+		req.onerror=()=>rej(req);
+		req.send();
+		restartAbortTimer(); // start countdown
+	});
 }
