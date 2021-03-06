@@ -26,6 +26,7 @@ function XSSCheck(url){ // XSS filter
 	return link!==filtered;
 }
 
+const relUrlReg=/^(?!www\.|(?:http|ftp)s?:\/\/|[A-Za-z]:\\|\/\/).*$/;
 function initPage(){
 	arriving();
 	marked.use({
@@ -36,7 +37,7 @@ function initPage(){
 					if(XSSCheck(url)){
 						return "";
 					}
-					if(url.match(/^\.*\/[^\/].*$/)){ // relative route
+					if(url.match(relUrlReg)){ // relative route
 						if(url.startsWith(".")){
 							url=PAGE_ROUTE+url;
 						}
@@ -101,7 +102,7 @@ function initPage(){
 		}
 		$("#content-list").find("img, audio, iframe, source").each(function(){
 			const $this=$(this);
-			if($this.attr("src").match(/^\.*\/[^\/].*$/)){
+			if($this.attr("src").match(relUrlReg)){
 				modifyRelativeURL($this,"src");
 			}
 		});
@@ -111,7 +112,7 @@ function initPage(){
 			if(!href){ // filtered or no content
 				return;
 			}
-			if(href.match(/^\.*\/[^\/].*$/)){
+			if(href.match(relUrlReg)){
 				modifyRelativeURL($this,"href");
 			}
 			if(!href.startsWith("#")){ // not modified also
