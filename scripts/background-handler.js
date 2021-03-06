@@ -12,7 +12,7 @@ function loadBackground($el,url){
 			$el.animate({"background-color":"#000"},500,"swing",res);
 		})).then(()=>new Promise(res=>{
 			$el.css("background-image",`url("${url}")`);
-			$el.animate({"background-color":"#888"},500,"swing",res);
+			$el.animate({"background-color":"#fff"},500,"swing",res);
 		}));
 	});
 }
