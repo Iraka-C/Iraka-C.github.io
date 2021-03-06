@@ -9,7 +9,7 @@
 	width: 100%;
 	height: var(--top-menu-height);
 	line-height: var(--top-menu-height); /* also vertical align */
-	background-color: #000000aa;
+	background-color: #00000077;
 	box-shadow: 0px 0px 3em #000000aa;
 	backdrop-filter: blur(1rem);
 	-webkit-backdrop-filter: blur(1rem);
