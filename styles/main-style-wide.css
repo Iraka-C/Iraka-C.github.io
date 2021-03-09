@@ -83,3 +83,13 @@ body{
 .extra-hint{
 	display: none;
 }
+
+.gallery-row{
+	display: flex;
+	flex-direction: row;
+}
+.gallery-row > img{
+	object-fit: cover;
+	width: 10vw;
+	height: 10vw;
+}

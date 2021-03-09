@@ -38,11 +38,11 @@ function initPage(){
 						return "";
 					}
 					if(url.match(relUrlReg)){ // relative route
-						if(url.startsWith(".")){
-							url=PAGE_ROUTE+url;
+						if(url.startsWith("/")){
+							url=PAGE_ROUTE+"."+url;
 						}
 						else{
-							url=PAGE_ROUTE+"."+url;
+							url=PAGE_ROUTE+url;
 						}
 					}
 					appendTitleBlock(url,text);
@@ -88,38 +88,7 @@ function initPage(){
 					this.src.endsWith(".gif");
 			})
 			.addClass("opaque");
-
-		function modifyRelativeURL($el,attribute){
-			const a=$el.attr(attribute);
-			if(a){
-				if(a.startsWith(".")){
-					$el.attr(attribute,PAGE_ROUTE+a);
-				}
-				else{
-					$el.attr(attribute,PAGE_ROUTE+"."+a);
-				}
-			}
-		}
-		$("#content-list").find("img, audio, iframe, source").each(function(){
-			const $this=$(this);
-			if($this.attr("src").match(relUrlReg)){
-				modifyRelativeURL($this,"src");
-			}
-		});
-		$("#content-list").find("a").each(function(){
-			const $this=$(this);
-			const href=$this.attr("href");
-			if(!href){ // filtered or no content
-				return;
-			}
-			if(href.match(relUrlReg)){
-				modifyRelativeURL($this,"href");
-			}
-			if(!href.startsWith("#")){ // not modified also
-				const newHref=$this.attr("href");
-				$this.attr("href",`javascript:jumpTo("${newHref}")`);
-			}
-		});
+		modifyRelativeURL($("#content-list"));
 	}).catch(err=>{
 		console.log(err);
 		$("#content-list").addClass("error-block");
@@ -139,6 +108,40 @@ function initPage(){
 		onResize(x,y);
 	});
 	onResize(window.innerWidth,window.innerHeight); // kick at first
+}
+
+function modifyRelativeURL($el){
+	function modify($el,attribute){
+		const a=$el.attr(attribute);
+		if(a){
+			if(a.startsWith("/")){
+				$el.attr(attribute,PAGE_ROUTE+"."+a);
+			}
+			else{
+				$el.attr(attribute,PAGE_ROUTE+a);
+			}
+		}
+	}
+	$el.find("img, audio, iframe, source").each(function(){
+		const $this=$(this);
+		if($this.attr("src").match(relUrlReg)){
+			modify($this,"src");
+		}
+	});
+	$el.find("a").each(function(){
+		const $this=$(this);
+		const href=$this.attr("href");
+		if(!href){ // filtered or no content
+			return;
+		}
+		if(href.match(relUrlReg)){
+			modify($this,"href");
+		}
+		if(!href.startsWith("#")){ // not modified also
+			const newHref=$this.attr("href");
+			$this.attr("href",`javascript:jumpTo("${newHref}")`);
+		}
+	});
 }
 
 let nowStyle="";

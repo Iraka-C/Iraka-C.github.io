@@ -65,3 +65,13 @@ body{
 	font-family: var(--font-light);
 	text-shadow: 0em 0em 0.3em black;
 }
+
+.gallery-row{
+	display: flex;
+	flex-direction: row;
+}
+.gallery-row > img{
+	object-fit: cover;
+	width: 20vw;
+	height: 20vw;
+}
