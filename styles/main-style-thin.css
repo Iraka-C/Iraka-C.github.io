@@ -57,6 +57,9 @@ body{
 #content-list > *{
 	cursor: pointer;
 }
+#content-list > * > .text-name{
+	display: inline-block;
+}
 .extra-hint{
 	position: relative;
 	opacity: 0.5;
@@ -74,4 +77,7 @@ body{
 	object-fit: cover;
 	width: 20vw;
 	height: 20vw;
+	border: 2px solid #000;
+	margin: 0.2em;
+	box-shadow: 0px 0px 0.2em #000;
 }

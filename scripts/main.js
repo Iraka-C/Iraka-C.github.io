@@ -41,7 +41,7 @@ function initPage(){
 				continue;
 			}
 			const $el=$("<div>");
-			$el.html(item.name);
+			$el.append($("<div class='text-name'>").text(item.name));
 			const $elHint=$("<div class='extra-hint'>").text(item.hint);
 			$el.append($elHint);
 			hoverHint($el,item.hint);

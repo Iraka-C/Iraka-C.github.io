@@ -1,0 +1,8 @@
+#content-list > img{
+	/* max-width: var(--max-length);
+	max-height: var(--max-length);
+	line-height: var(--max-length); */
+	height: var(--max-length);
+	/* object-fit: contain; */
+	margin: 0.5em;
+}

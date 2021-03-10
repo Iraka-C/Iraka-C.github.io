@@ -238,9 +238,8 @@ function parseAndInsertMarkdown(content){
 
 function renderLaTeX(){
 	try{
-		MathJax.Hub.Queue(["Typeset",MathJax.Hub,"content-list"]);
-		// Do not use MathJax V3: not better than V2 effect now
-		// MathJax.typesetPromise($("#content-list"));
+		// MathJax.Hub.Queue(["Typeset",MathJax.Hub,"content-list"]); // V2
+		MathJax.typesetPromise($("#content-list")); // V3
 	}
 	catch(err){
 		if(err instanceof ReferenceError){ // not loaded, try again later

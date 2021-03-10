@@ -1,6 +1,4 @@
-/**
- * Use Sinaimg as image provider
- */
+$(initPage); // Main program entrance
 
 function arriving(){
 	loadBackground($("body"),PAGE_BG||"./resources/main-bg.jpg").catch(()=>{
@@ -22,38 +20,41 @@ function jumpTo(url){
 }
 
 function initPage(){
-	const $list=$("#content-list");
+	arriving();
 
-	loadConfig().then(content=>{
-		const items=JSON.parse(content);
-		for(let i=0;i<items.length;i++){
-			const item=items[i];
-			if(item.title){ // title info
-				$("#title-text").text(item.title);
-				continue;
-			}
-			if(!item.content||!item.content.length){ // empty
-				continue;
-			}
-			const $el=$("<div>");
-			$el.append($("<div class='text-name'>").text(item.name));
-			const $elHint=$("<div class='gallery-row'>");
+	if(!PAGE_TITLE){
+		$("#title-text").text("Null");
+		$("#content-list").addClass("error-block");
+		$("#page-content").addClass("error-container");
+		$("#content-list").text("No gallery title selected");
+	}
+	else{
+		$("#title-text").text(PAGE_TITLE);
+	}
 
-			const N=Math.min(item.content.length,4); // at most 4 pics
-			for(let i=0;i<N;i++){
-				const c=item.content[i];
-				const $img=$(`<img src="//${c[0]}.sinaimg.cn/mw600/${c[1]}">`);
-				$elHint.append($img);
+	loadConfig().then(ct=>{
+		const items=JSON.parse(ct);
+		let item=null;
+		for(let i=0;i<items.length;i++){ // find gallery with name
+			const t=items[i];
+			if(t.name==PAGE_TITLE){
+				item=t;
+				break;
 			}
+		}
+		if(!item){ // not found
+			const err={status:`Gallery ${PAGE_TITLE} not found`};
+			throw err;
+		}
+		const content=item.content;
+		if(!content||!content.length){ // empty gallery
+			const err={status:`Gallery ${PAGE_TITLE} is empty`};
+			throw err;
+		}
 
-			$el.append($elHint);
-			$list.append($el);
-	
-			
-			$el.click(e=>{
-				const encodedTitle=encodeURIComponent(item.name);
-				jumpTo(`./gallery.html${window.location.search}&title=${encodedTitle}`);
-			});
+		for(const c of content){ // @TODO: scrolling
+			const $img=$(`<img src="//${c[0]}.sinaimg.cn/mw600/${c[1]}">`);
+			$("#content-list").append($img);
 		}
 	}).catch(err=>{
 		console.warn(err);
@@ -64,7 +65,6 @@ function initPage(){
 			$("#content-list").text("Error");
 		}
 	});
-	arriving();
 
 	$(window).on("resize",e=>{
 		const x=window.innerWidth;
@@ -77,14 +77,14 @@ function initPage(){
 let nowStyle="";
 function onResize(x,y){
 	const $style=$("#page-style");
-	const newStyleHREF=x>y?"./styles/main-style-wide.css":"./styles/main-style-thin.css";
+	const newStyleHREF=x>y?"./styles/gallery-style-wide.css":"./styles/gallery-style-thin.css";
 	if(newStyleHREF!=nowStyle){ // update
 		$style.attr("href",newStyleHREF);
 		nowStyle=newStyleHREF;
 	}
 }
 
-// ================ Loading =================
+// ================ loading ================
 function loadConfig(){
 	if(!PAGE_CONFIG){
 		throw new Error("No PAGE_CONFIG found.");

@@ -1,0 +1,9 @@
+:root{
+	--max-length: max(10em, 15vw);
+}
+
+#content-list > img{
+	display:inline-block;
+	box-shadow: 0px 0px 2em #000000;
+	border-radius: 0em;
+}

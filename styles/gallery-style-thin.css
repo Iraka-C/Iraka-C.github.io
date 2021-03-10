@@ -1,0 +1,4 @@
+#content-list > img{
+	width: calc(100% - 1em);
+	margin: 0.5em;
+}

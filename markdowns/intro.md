@@ -1,70 +1,70 @@
-# 大标题[01]()
+# A Markdown Renderer [Github Address](https://github.com/Iraka-C/Iraka-C.github.io)
 
-段落文字
+These are words.
 
-## 右上角是目录列表！
+## On the upper-right corner is the index of this page!
 
-菜单链接：鼠标移至标题上访问（正文不会显示）
+The followings are links to be shown in title bar menu. Hover your mouse on the title to show them. You can't see them in context.
 
-[菜单链接1](*https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter)
+[Menu item 1](*https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter)
 
-[菜单链接2](*https://marked.js.org/using_pro#renderer)
+[Menu item 2](*https://marked.js.org/using_pro#renderer)
 
-[回主页](*../index.html)
+[Back to front](*../index.html)
 
-使用方法：用链接
+(You cannot see the items above)
 
+```js
+markdown.html?title=<encodeURIComponent("Title Text")>&src=<encodeURIComponent("url to markdown")>
 ```
-markdown.html?title=<你的标题>&src=<encoded markdown 链接>
-```
 
-内嵌网页（找不到encoded markdown 链接的时候是404），拖动右下角调整大小：
+Embedded iframes: (If the "url to markdown" is invalid, this renderer will show 404. If this page cannot reach the file, it will show an error).
+
+Drag the bottom-right corner to resize (not working on all browsers!)
 
 ![FRAME](../markdown.html)
 
 ![FRAME](//bing.com)
 
-会自动处理相对路径。
+This renderer will automatically translate all relative paths in the markdown file (except unsafe ones, see [this section](#xss defense)).
 
-## 二级标题
+## 2<sup>nd</sup> level title
 
-### 三级标题
+### 3<sup>rd</sup> level title
 
-**粗体文字**和*斜体文字*。
+**Bold** and *Italics*.
 
-上标<sup>1</sup>和下标<sub>2</sub>。
+Superscript <sup>1</sup> and Subscript <sub>2</sub> .
 
-<u>下划线</u>和<del>删除线</del>。
+<u>Underline</u> and <del>Delete line</del>。
 
-[页面内链接](#第二个三级标题)
+[In-page anchor](#codes)
 
-[页面内查找（目前似乎不够好用）](#:~:text=markdown)
-
-> 引文
+> Block quote
 >
-> * 一级列表
->   * 二级列表
->     * 三级列表
->     * 三级列表
-> * 一级列表
+> * List lv.1
+>   * List lv.2
+>     * List lv.3
+>     * List lv.3
+> * List lv.1
 >
-> 一些想说的话
+> Include your quote here
 >
-> * [ ] 勾选框
-> * [ ] 勾选框2
-> * [x] 选中勾选框
+> * [ ] Checkbox
+> * [ ] Checkbox2
+> * [x] Checked Checkbox
 >
-> > 二级引文
+> > Block quote lv. 2
 > >
-> > > 引文可以嵌套。
+> > > Quotes can be nested.
 > >
-> > 1. 有序列表
-> > 2. 有序列表
-> > 3. 还是有序列表
+> > 1. Ordered list 1
+> > 2. Ordered list 2
+> > 3. Ordered list 3
 
-### 各种代码
+### Codes
 
-支持代码`Code.render`的书写。块级代码如下：
+Supports rendering `coding languages` in code format:
 
 ```javascript
 function initPage(){
@@ -82,31 +82,29 @@ function initPage(){
 ```
 
 
-> 块级代码过长时可以左右滑动！
+> When the line is too long, horizontally drag to show all! (or on PC, use arrow keys)
 
-页面内公式：$\alpha_r=\alpha_c+\alpha_b(1-\alpha_c) 10^{-4}$。公式可以超链接[$\alpha_r=\alpha_c+\alpha_b(1-\alpha_c)$](//en.wikipedia.org/wiki/URI_fragment)
+Inline expression: $\alpha_r=\alpha_c+\alpha_b(1-\alpha_c) 10^{-4}$. You may also add hyperlink to expressions: [$\alpha_r=\alpha_c+\alpha_b(1-\alpha_c)$](//en.wikipedia.org/wiki/URI_fragment).
 
-音频和视频（必须使用AUDIO，VIDEO标签）：
+Audio and video. Include `AUDIO` or `VIDEO` tag in image expression `![AUDIO/VIDEO](url)`:
 
 ![AUDIO](../resources/d.mp3)
 
 ![VIDEO](../resources/tower.mp4)
 
-> 如果视频太大可以指定手动视频宽度、高度
-> 仅适用于宽屏，不适用于手机
-> 注意链接文件名大小写！
+> If the video has a large size, you may control its size using `<video>` tag in wide-screen view mode.
 > 
 > ---
->
+> 
 > <video controls width="200"><source src="../resources/tower.mp4"></video>
 
-靠左
+Align left
 
-<center>居中</center>
+<center>Middle</center>
 
-<div align="right">靠右的一段<br>文字</div>
+<div align="right">A text box<br>on the right</div>
 
-图片：（JPEG或有OPAQUE名的图片表示不透明图像。其余图像显示为透明图像）
+Image: (use `OPAQUE` tag in image name to render as solid background)
 
 ![](https://upload.wikimedia.org/wikipedia/en/7/7b/Aspheric_navitar_elgeet.jpg)
 
@@ -114,21 +112,21 @@ function initPage(){
 
 ![](https://upload.wikimedia.org/wikipedia/commons/3/3b/CIE1931xy_blank.svg)
 
-也可以通过手动给img添加`class='opaque'`来得到inline的不透明图像<img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/CIE1931xy_blank.svg" width="100" class="opaque">。如果不添加class，则<img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/CIE1931xy_blank.svg" width="100">就是透明图像。
+If you use `<img>` tag to specify its size, add `class='opaque' `to get inline opaque image <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/CIE1931xy_blank.svg" width="100" class="opaque">. Elsewise, <img src="https://upload.wikimedia.org/wikipedia/commons/3/3b/CIE1931xy_blank.svg" width="100"> is a transparent image.
 
 
 
-想手动指定长宽需要完整`<img>`标签：
+GIFs are also available:
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/6/63/Logistic_Map_Animation.gif" width="400" />
 
-### 第三个三级标题
+### Next 3<sup>rd</sup> level title
 
-### 超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题超长标题
+### Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title Super Long Title
 
-#### 四级标题（目录中不会显示！）
+#### 4<sup>th</sup> level title (won't appear in index!)
 
-块级公式换行请打4个反斜杠！（markdown转义）
+Render an expression block: (4 backslashes for a new line! Markdown escape character issue)
 
 $$
 \begin{aligned}
@@ -140,30 +138,32 @@ $$
 \end{aligned}
 $$
 
-表格（鼠标在表头上高亮列）：
+Table: highlight a column by hovering mouse cursor on the table head bar
 
-| 本列居左 | 本列居中 | 本列靠右 |
+| align left |    align middle     | align right |
 | :--- | :---: | ---: |
-| 1 | * 列表<br />* 换行 |  2 |
-| 嵌入文字的<img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Rainbow1.svg" width="200" />图片 | SVG图片和视频  | <video controls width="200"><source src="../resources/tower.mp4"></video> |
+| 1 | * list<br />* items |  2 |
+| inline <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Rainbow1.svg" width="200" /> image | SVG image and video | <video controls width="200"><source src="../resources/tower.mp4"></video> |
 
-分割线：
+Horizontal split line:
 
 ---
 
-下一段落
+Next chapter
 
-## XSS防御
+## XSS Defense
 
-### 典型的注入型攻击
+### Common XSS attack via html tag and CSS
 
-以下攻击脚本会被本页过滤：
+The following contents will be filtered by the renderer:
 
-| 类型         | 示例（已被过滤）                                             |
+| Type     | Sample (already filtered)                     |
 | ----------: | :----------------------------------------------------------: |
-| 脚本嵌入 | `<script>alert(1)</script>`<br/><script>alert(1)</script> |
-| 脚本嵌入     | `![img](javascript:alert(1))`<br>![img](javascript:alert(1)) |
-| 转义脚本嵌入 | `[bad-link](&#0000106&#0000097&#0000118&#0000097`<br/>`&#0000115&#0000099&#0000114&#0000105&#0000112`<br/>`&#0000116&#0000058&#0000097&#0000108&#0000101`<br/>`&#0000114&#0000116&#0000040&&#0000048&&#0000041)`<br/>[bad-link](&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&&#0000048&&#0000041) |
-| CSS攻击      | `<div style='background-image:url("javascript:alert(1)")'>para</div>`<br><div style='background-image:url("javascript:alert(1)")'>para</div> |
+| Script Embedding | `<script>alert(1)</script>`<br/><script>alert(1)</script> |
+| Script Embedding | `<script>alert(1)</script>`<br/>`![img](javascript:alert(1))`<br>![img](javascript:alert(1)) |
+| Escaped Script Embedding | `<script>alert(1)</script>`<br/>`[bad-link](&#0000106&#0000097&#0000118&#0000097`<br/>`&#0000115&#0000099&#0000114&#0000105&#0000112`<br/>`&#0000116&#0000058&#0000097&#0000108&#0000101`<br/>`&#0000114&#0000116&#0000040&&#0000048&&#0000041)`<br/>[bad-link](&#0000106&#0000097&#0000118&#0000097&#0000115&#0000099&#0000114&#0000105&#0000112&#0000116&#0000058&#0000097&#0000108&#0000101&#0000114&#0000116&#0000040&&#0000048&&#0000041) |
+|               CSS Attack | `<div style='background-image:url("javascript:alert(1)")'>para</div>`<br><div style='background-image:url("javascript:alert(1)")'>para</div> |
 
-[一般而言，本页不允许 `style, href="某些脚本", onxxx=某些脚本` 等行为。这些内容在解释.md文件时会被过滤掉。]()
+[Generally,  this renderer doesn't allow actions like `style, href="some script", onxxx="some script"`. Contents like this will be filtered when parsing the `.md` file]()
+
+NOTICE: some unsafe relative path (like `resources/main-bg.jpg`) will also be treated as unsafe. Use other types of relative path instead! (in this case, `/resources/main-bg.jpg`)

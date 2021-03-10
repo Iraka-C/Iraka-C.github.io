@@ -4,6 +4,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="referrer" content="no-referrer" />
 	<link rel="stylesheet" type="text/css" href="./styles/main-style.css" />
 	<link id="page-style" rel="stylesheet" type="text/css" href="./styles/main-style-wide.css" />
 
@@ -15,7 +16,7 @@
 		const query=window.location.search;
 		if(!query){ // default jump
 			const configUrl=encodeURIComponent("./resources/main-config.json");
-			window.location.replace(`//iraka-c.github.io/index.html?src=${configUrl}`);
+			window.location.replace(`./index.html?src=${configUrl}`);
 			// will never reach following codes
 		}
 		const qParams={};
@@ -24,7 +25,7 @@
 			qParams[kv[0]]=kv[1];
 		}
 		const PAGE_CONFIG=decodeURIComponent(qParams.src);
-		const PAGE_BG=decodeURIComponent(qParams.bg);
+		const PAGE_BG=qParams.bg?decodeURIComponent(qParams.bg):null;
 		$(initPage); // Main program entrance
 	</script>
 </head>
