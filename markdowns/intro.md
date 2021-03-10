@@ -26,7 +26,7 @@ Drag the bottom-right corner to resize (not working on all browsers!)
 
 ![FRAME](//bing.com)
 
-This renderer will automatically translate all relative paths in the markdown file (except unsafe ones, see [this section](#xss defense)).
+This renderer will automatically translate all relative paths in the markdown file (except unsafe ones, see [this section](#xss-defense)).
 
 ## 2<sup>nd</sup> level title
 

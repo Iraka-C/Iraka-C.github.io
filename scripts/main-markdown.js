@@ -19,7 +19,6 @@ function jumpTo(url){
 	});
 }
 
-// @TODO: XSS filter after pasing the whole page
 function XSSCheck(url){ // XSS filter
 	const link=`<a href="${url}"></a>`;
 	const filtered=filterXSS(link);
@@ -27,6 +26,10 @@ function XSSCheck(url){ // XSS filter
 }
 
 const relUrlReg=/^(?!www\.|(?:http|ftp)s?:\/\/|[A-Za-z]:\\|\/\/).*$/;
+function isRelativeUrl(url){
+	if(url.startsWith("#")||url.startsWith("?"))return false;
+	return url.match(relUrlReg)?true:false;
+}
 function initPage(){
 	arriving();
 	marked.use({
@@ -37,7 +40,7 @@ function initPage(){
 					if(XSSCheck(url)){
 						return "";
 					}
-					if(url.match(relUrlReg)){ // relative route
+					if(isRelativeUrl(url)){ // relative route
 						if(url.startsWith("/")){
 							url=PAGE_ROUTE+"."+url;
 						}
@@ -124,7 +127,7 @@ function modifyRelativeURL($el){
 	}
 	$el.find("img, audio, iframe, source").each(function(){
 		const $this=$(this);
-		if($this.attr("src").match(relUrlReg)){
+		if(isRelativeUrl($this.attr("src"))){
 			modify($this,"src");
 		}
 	});
@@ -134,7 +137,7 @@ function modifyRelativeURL($el){
 		if(!href){ // filtered or no content
 			return;
 		}
-		if(href.match(relUrlReg)){
+		if(isRelativeUrl(href)){
 			modify($this,"href");
 		}
 		if(!href.startsWith("#")){ // not modified also
@@ -243,6 +246,9 @@ function renderLaTeX(){
 	}
 	catch(err){
 		if(err instanceof ReferenceError){ // not loaded, try again later
+			setTimeout(renderLaTeX,1000);
+		}
+		if(err instanceof TypeError){ // function not loaded, try again later
 			setTimeout(renderLaTeX,1000);
 		}
 		else{ // other types of error
