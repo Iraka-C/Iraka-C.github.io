@@ -6,14 +6,14 @@
 	"url": "./markdown.html?title=Introduction&src=.%2Fmarkdowns%2Fintro.md&bg=https%3A%2F%2Fraw.githubusercontent.com%2FMinghuiHub%2FMinghuiHub.github.io%2Fmain%2Fresources%2Fmain-bg.jpg"
 },{
 	"name": "Gadgets",
-	"hint": "To the main page",
-	"url": "//iraka-c.github.io"
+	"hint": "Things I've made.",
+	"url": "./markdown.html?title=Introduction&src=.%2Fmarkdowns%2Fgadgets.md"
 },{
 	"name": "Photography",
-	"hint": "Gallery config sample",
+	"hint": "Gallery config sample (Under Construction!)",
 	"url": "./index-gallery.html?src=.%2Fresources%2Fmain-index-gallery-config.json"
 },{
-	"name": "Contact",
+	"name": "Contact (Under Construction!)",
 	"hint": "How to reach me",
 	"url": "./contact.html"
 }]

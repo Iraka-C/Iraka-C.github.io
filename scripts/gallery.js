@@ -53,7 +53,13 @@ function initPage(){
 		}
 
 		for(const c of content){ // @TODO: scrolling
-			const $img=$(`<img src="//${c[0]}.sinaimg.cn/mw600/${c[1]}">`);
+			let $img;
+			if(c.length==2){
+				$img=$(`<img src="//${c[0]}.sinaimg.cn/mw600/${c[1]}">`);
+			}
+			else{
+				$img=$(`<img src="${c[0]}">`);
+			}
 			$("#content-list").append($img);
 		}
 	}).catch(err=>{

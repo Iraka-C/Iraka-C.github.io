@@ -42,7 +42,13 @@ function initPage(){
 			const N=Math.min(item.content.length,4); // at most 4 pics
 			for(let i=0;i<N;i++){
 				const c=item.content[i];
-				const $img=$(`<img src="//${c[0]}.sinaimg.cn/mw600/${c[1]}">`);
+				let $img;
+				if(c.length==2){
+					$img=$(`<img src="//${c[0]}.sinaimg.cn/mw600/${c[1]}">`);
+				}
+				else{
+					$img=$(`<img src="${c[0]}">`);
+				}
 				$elHint.append($img);
 			}
 
